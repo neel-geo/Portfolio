@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neel Simpson - Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background-color: #f4f1ea;
+        }
+
+        header {
+            background: linear-gradient(135deg, #6b7c59 0%, #4a6b7a 100%);
+            color: #f4f1ea;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(138, 115, 85, 0.15);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 300px;
+            height: 300px;
+            background: rgba(74, 107, 122, 0.2);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 4px solid #8a7355;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #e8dcc8;
+        }
+
+        nav {
+            background-color: #1a1a1a;
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        nav::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(74, 107, 122, 0.2) 0%, transparent 100%);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: #f4f1ea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #8a7355;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            width: 150px;
+            height: 150px;
+            background: rgba(74, 107, 122, 0.08);
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+            z-index: -1;
+        }
+
+        section {
+            margin-bottom: 4rem;
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: rgba(138, 115, 85, 0.06);
+            clip-path: polygon(100% 0, 100% 100%, 0 100%);
+        }
+
+        h2 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            border-bottom: 3px solid #6b7c59;
+            padding-bottom: 0.5rem;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #4a6b7a;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #34495e;
+        }
+
+        .about-layout {
+            display: flex;
+            gap: 2.5rem;
+            align-items: stretch;
+        }
+
+        .about-photo {
+            flex-shrink: 0;
+            width: 280px;
+        }
+
+        .about-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        @media (max-width: 768px) {
+            .about-layout {
+                flex-direction: column;
+            }
+
+            .about-photo {
+                width: 100%;
+                max-height: 300px;
+            }
+        }
+
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .project-card {
+            border: 2px solid #4a6b7a;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background-color: #fefdfb;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(74, 107, 122, 0.25);
+            border-color: #6b7c59;
+        }
+
+        .project-card h3 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .project-card p {
+            color: #5a6c7d;
+            margin-bottom: 1rem;
+        }
+
+        .gee-embed {
+            border: 2px solid #6b7c59;
+            border-radius: 8px;
+            padding: 1rem;
+            background-color: #f9f9f9;
+            margin-bottom: 1.5rem;
+        }
+
+        .gee-embed h3 {
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+        }
+
+        .gee-placeholder {
+            background: linear-gradient(135deg, #6b7c59 0%, #4a6b7a 100%);
+            color: white;
+            padding: 3rem;
+            text-align: center;
+            border-radius: 4px;
+            font-style: italic;
+        }
+
+        .writing-list {
+            list-style: none;
+        }
+
+        .writing-item {
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            background-color: #fefdfb;
+            border-left: 4px solid #4a6b7a;
+            border-radius: 4px;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+
+        .writing-item:hover {
+            background-color: #f4f1ea;
+            border-left-color: #8a7355;
+        }
+
+        .writing-item h3 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background-color: #fefdfb;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            transition: box-shadow 0.3s;
+        }
+
+        .experience-item:hover {
+            box-shadow: 0 4px 12px rgba(74, 107, 122, 0.15);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .experience-header h3 {
+            color: #1a1a1a;
+            margin-bottom: 0.25rem;
+            font-size: 1.3rem;
+        }
+
+        .company {
+            color: #6b7c59;
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .experience-meta {
+            text-align: right;
+        }
+
+        .location {
+            color: #4a6b7a;
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .dates {
+            color: #8a7355;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        .description {
+            color: #4a4a4a;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 768px) {
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .experience-meta {
+                text-align: left;
+            }
+        }
+
+        .writing-item .date {
+            color: #7d8a96;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        footer {
+            background-color: #1a1a1a;
+            color: #f4f1ea;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #6b7c59, #4a6b7a, transparent);
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .contact-info a {
+            color: #8a7355;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: #4a6b7a;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <!-- Replace 'your-photo.jpg' with the path to your photo -->
+            <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_2053_(2).jpg" alt="Neel Simpson" class="profile-photo">
+            <h1>Neel Simpson</h1>
+            <p>Geoscience | Energy Transition | Global Development</p>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#projects">GEE Projects</a></li>
+            <li><a href="#writing">Writing</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <section id="about">
+            <h2>About Me</h2>
+            <div class="about-layout">
+                <div class="about-photo">
+                    <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_0196.jpg" alt="Neel Simpson">
+                </div>
+                <div class="about-text about-content">
+                    <p>Hello, and thank you for coming to my portfolio! My name is Neel Simpson. I'm working on making sure that the energy transition is socially just, ecologically sustainable, and economically efficient.</p>
+                    <p>I earned a bachelor's degree in geology at the College of William and Mary, where I began learning about the relationship between natural resources, climate, and society. After working in environmental consulting, I decided to pursue a Master's in Development Engineering at UC Berkeley.</p>
+                    <p>Through interdisciplinary research in earth sciences, development economics, and energy engineering, I hope to understand what's broken in our current energy systems and build a brighter tomorrow.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <h2>Work Experience</h2>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3>GIS Analyst</h3>
+                        <p class="company">DT Master Carbon</p>
+                    </div>
+                    <div class="experience-meta">
+                        <p class="location">Berkeley, California, USA</p>
+                        <p class="dates">August 2024 - December 2025</p>
+                    </div>
+                </div>
+                <p class="description">I worked as a remote sensing analyst for a France-based startup selling carbon and biodiversity credits on the European Market. I analyzed imagery for biodiversity and climate risk and connected the data to real insights for clients. Some of my projects included incorporating water security concerns into a biodiversity risk framework and developing a remote sensing algorithm to monitor vegetation health at solar installations in France.</p>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3>Geologist</h3>
+                        <p class="company">Tetra Tech</p>
+                    </div>
+                    <div class="experience-meta">
+                        <p class="location">Washington, DC, USA</p>
+                        <p class="dates">May 2023 - July 2024</p>
+                    </div>
+                </div>
+                <p class="description">As an environmental geologist, I was responsible for gathering and analyzing field data related to soils and groundwater. I worked on projects for the District of Columbia Department of Energy and Environment as well as the United States Environmental Protection Agency. I analyzed data in ArcGIS Pro and RockWorks to ensure NEPA and CWA compliance at government owned sites in the city.</p>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <h3>GIS Analyst</h3>
+                        <p class="company">Council on Energy, Environment, and Water</p>
+                    </div>
+                    <div class="experience-meta">
+                        <p class="location">New Delhi, India</p>
+                        <p class="dates">September 2022 - April 2023</p>
+                    </div>
+                </div>
+                <p class="description">I worked with the Sustainable Food Systems team to integrate geospatial analysis into a report on opportunities and challenges for agroforestry in India. I leveraged open source imagery and data to identify which districts in India had the highest potential for agroforestry. I learned how to apply GIS and environmental modelling skills in an agricultural setting and focused on socieconomic, environmental, and nutritional dimensions of food systems transformation.</p>
+            </div>
+        </section>
+
+        <section id="projects">
+            <h2>Google Earth Engine Projects</h2>
+            
+            <div class="gee-embed">
+                <h3>Interactive GEE Application 1</h3>
+                <!-- Replace the placeholder div below with: <iframe src="YOUR_GEE_APP_URL" width="100%" height="600" frameborder="0"></iframe> -->
+                <div class="gee-placeholder">
+                    Your GEE App Will Appear Here<br>
+                    <small>Replace this div with an iframe containing your published GEE app URL</small>
+                </div>
+            </div>
+
+            <div class="gee-embed">
+                <h3>Interactive GEE Application 2</h3>
+                <!-- Replace the placeholder div below with: <iframe src="YOUR_GEE_APP_URL" width="100%" height="600" frameborder="0"></iframe> -->
+                <div class="gee-placeholder">
+                    Your GEE App Will Appear Here<br>
+                    <small>Replace this div with an iframe containing your published GEE app URL</small>
+                </div>
+            </div>
+
+            <h3 style="margin-top: 3rem; color: #1a1a1a;">Project Highlights</h3>
+            <div class="project-grid">
+                <div class="project-card">
+                    <h3>Land Use Change Analysis</h3>
+                    <p>Analyzing temporal changes in land use patterns using Landsat imagery and machine learning classification techniques.</p>
+                    <p><strong>Tools:</strong> Google Earth Engine, Random Forest Classification</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Renewable Energy Site Assessment</h3>
+                    <p>Geospatial analysis for identifying optimal locations for renewable energy infrastructure based on environmental and social factors.</p>
+                    <p><strong>Tools:</strong> GEE, SRTM Data, Climate Data</p>
+                </div>
+                
+                <div class="project-card">
+                    <h3>Climate Vulnerability Mapping</h3>
+                    <p>Mapping climate vulnerability indicators across regions to support equitable adaptation planning.</p>
+                    <p><strong>Tools:</strong> GEE, MODIS, Sentinel-2</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="writing">
+            <h2>Writing & Research</h2>
+            <ul class="writing-list">
+                <li class="writing-item">
+                    <h3>Energy Justice in the Transition: A Framework for Equitable Renewable Development</h3>
+                    <div class="date">2024</div>
+                    <p>An exploration of how to ensure renewable energy development benefits local communities and addresses historical inequities in energy access.</p>
+                </li>
+                
+                <li class="writing-item">
+                    <h3>Geospatial Analysis of Critical Mineral Supply Chains</h3>
+                    <div class="date">2024</div>
+                    <p>Examining the geographical distribution of critical minerals essential for clean energy technologies and their socioeconomic implications.</p>
+                </li>
+                
+                <li class="writing-item">
+                    <h3>Remote Sensing Applications in Sustainable Development</h3>
+                    <div class="date">2023</div>
+                    <p>A review of how satellite imagery and geospatial tools can support evidence-based development policy and planning.</p>
+                </li>
+            </ul>
+        </section>
+
+        <section id="contact">
+            <h2>Get In Touch</h2>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 1.5rem;">
+                I'm always interested in connecting with others working on sustainable energy systems and development challenges.
+            </p>
+            <div class="contact-info">
+                <a href="mailto:your.email@example.com">Email</a>
+                <a href="https://linkedin.com/in/yourprofile" target="_blank">LinkedIn</a>
+                <a href="https://github.com/yourprofile" target="_blank">GitHub</a>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Neel Simpson. All rights reserved.</p>
+    </footer>
+</body>
+</html>
