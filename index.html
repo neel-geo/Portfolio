@@ -47,15 +47,15 @@
             text-align: center;
             position: relative;
             border-bottom: 1px solid var(--forest);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            max-height: 200px;
         }
 
-        .profile-photo {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 2px solid var(--gold);
-            object-fit: cover;
-            margin-bottom: 1rem;
+        header.scrolled {
+            padding: 0;
+            max-height: 0;
+            border-bottom: none;
         }
 
         header h1 {
@@ -65,6 +65,12 @@
             margin-bottom: 0.5rem;
             letter-spacing: 0.5px;
             color: var(--cream);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled h1 {
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         header p {
@@ -73,12 +79,20 @@
             font-weight: 400;
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled p {
+            opacity: 0;
+            transform: translateY(-20px);
         }
 
         nav {
             background-color: var(--darker-bg);
             padding: 0;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 100;
             border-bottom: 1px solid var(--forest);
         }
 
@@ -226,6 +240,8 @@
             height: 100%;
             object-fit: cover;
             display: block;
+            border-radius: 50%;
+            border: 2px solid var(--gold);
         }
 
         .about-text {
@@ -575,15 +591,6 @@
             left: 0;
         }
 
-        footer {
-            background-color: var(--darker-bg);
-            color: var(--text-secondary);
-            text-align: center;
-            padding: 1.5rem;
-            border-top: 1px solid var(--forest);
-            font-size: 0.9rem;
-        }
-
         .content-container::-webkit-scrollbar {
             width: 10px;
         }
@@ -659,8 +666,7 @@
 </head>
 <body>
     <div class="portfolio-container">
-        <header>
-            <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_2053_(2).jpg" alt="Neel Simpson" class="profile-photo">
+        <header id="main-header">
             <h1>Neel Simpson</h1>
             <p>Geoscience · Energy Transition · Global Development</p>
         </header>
@@ -675,14 +681,14 @@
             </ul>
         </nav>
 
-        <div class="content-container">
+        <div class="content-container" id="content">
             <!-- About Tab -->
             <div id="about" class="tab-content active">
                 <div class="section-card">
                     <h2>About Me</h2>
                     <div class="about-layout">
                         <div class="about-photo">
-                            <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_0196.jpg" alt="Neel Simpson">
+                            <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_2053_(2).jpg" alt="Neel Simpson">
                         </div>
                         <div class="about-text">
                             <p>Hello, and thank you for coming to my portfolio! My name is Neel Simpson. I'm working on making sure that the energy transition is socially just, ecologically sustainable, and economically efficient.</p>
@@ -743,7 +749,7 @@
                                 <p class="image-caption">Inspecting stormwater runoff patterns and assessing initial design approaches</p>
                             </div>
                             <div class="experience-image-wrapper">
-                                <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_8694_2.JPG" alt="Levellogger deployment">
+                                <img src="https://raw.githubusercontent.com/neel-geo/Portfolio/main/IMG_8694 (2).jpg" alt="Levellogger deployment">
                                 <p class="image-caption">Deploying Solinst Levellogger at Poplar Point for contaminant transport model</p>
                             </div>
                         </div>
@@ -856,12 +862,8 @@
             </div>
         </div>
 
-        <footer>
-            <p>&copy; 2024 Neel Simpson. All rights reserved.</p>
-        </footer>
-    </div>
-
     <script>
+        // Tab switching functionality
         const tabButtons = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -876,6 +878,18 @@
 
                 document.querySelector('.content-container').scrollTop = 0;
             });
+        });
+
+        // Header shrinking on scroll
+        const contentContainer = document.getElementById('content');
+        const header = document.getElementById('main-header');
+
+        contentContainer.addEventListener('scroll', () => {
+            if (contentContainer.scrollTop > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
         });
     </script>
 </body>
